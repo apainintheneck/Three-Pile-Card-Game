@@ -41,7 +41,7 @@ public class GameView
    }
    
    //Set buttons and labels
-   public void initPlayArea(Icon cardBackIcon, Icon[] humanHandIcons)
+   public void init(Icon cardBackIcon, Icon[] humanHandIcons)
    {
       //Set labels and buttons for both hands
       setComputerHand(numCardsPerHand, cardBackIcon);

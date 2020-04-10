@@ -75,16 +75,16 @@ public class GameModel
     * @param computer
     * @return int
     */
-   public int compareCards(char human, char computer){
+   public int compareCards(Card human, Card computer){
       int i = 0;
       int j = 0;
       for (; i<Card.valuRanks.length; i++){
-         if (human == Card.valuRanks[i]){
+         if (human.getValue() == Card.valuRanks[i]){
             break;
          }
       }
       for (; j<Card.valuRanks.length; j++){
-         if (computer == Card.valuRanks[j]){
+         if (computer.getValue() == Card.valuRanks[j]){
             break;
          }
       }

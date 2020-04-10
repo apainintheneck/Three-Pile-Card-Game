@@ -1,10 +1,16 @@
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-//Phase 1 Model Class for Low Card Game
+/**
+ * Model class for MVC design.
+ * 
+ * @author kevinrobell
+ *
+ */
 public class GameModel
 {  
    private CardGameFramework LowCardGame;
+   //Need cardIcons to load card icons even though compiler says it's unused.
    private GUICard cardIcons = new GUICard();
    
    private int userMove = 1;
@@ -16,6 +22,16 @@ public class GameModel
    
    private Card playedCards[];
    
+   /**
+    * Constructor
+    * 
+    * @param numPacksPerDeck
+    * @param numJokersPerPack
+    * @param numUnusedCardsPerPack
+    * @param unusedCardsPerPack
+    * @param numPlayers
+    * @param numCardsPerHand
+    */
    GameModel(int numPacksPerDeck, int numJokersPerPack, int numUnusedCardsPerPack, 
          Card[] unusedCardsPerPack, int numPlayers, int numCardsPerHand) {
       this.numPlayers = numPlayers;
@@ -32,13 +48,33 @@ public class GameModel
    public int getNumCardInDeck() { return LowCardGame.getNumCardsRemainingInDeck(); }
    public int getNumCardsPerHand() { return numCardsPerHand; }
    public int getNumPlayers() { return numPlayers; }
+   
+   /**
+    * Removes card from Hand and places it in playedCard array at playerIndex.
+    * 
+    * @param playerIndex
+    * @param cardIndex
+    */
    public void playCard(int playerIndex, int cardIndex) {
       playedCards[playerIndex] = LowCardGame.playCard(playerIndex, cardIndex);
    }
-   public Card getPlayedCard(int cardIndex) { return playedCards[cardIndex]; }
+   public Card getPlayedCard(int playerIndex) { return playedCards[playerIndex]; }
+   
+   /**
+    * Returns true if the player was able to take a card.
+    * 
+    * @param playerIndex
+    * @return boolean
+    */
    public boolean takeCard(int playerIndex) { return LowCardGame.takeCard(playerIndex); }
    
-   //Compare two cards
+   /**
+    * Returns 1 if human wins. Returns 0 for ties. Returns -1 if computer wins.
+    * 
+    * @param human
+    * @param computer
+    * @return int
+    */
    public int compareCards(char human, char computer){
       int i = 0;
       int j = 0;
@@ -76,7 +112,11 @@ public class GameModel
    public int getComputerScore() { return computerScore; }
    public void incrementComputerScore() { computerScore++; }
    
-   //Get icons using GUICard class
+   /**
+    * Create an array of card icons based upon the human's hand.
+    * 
+    * @return Icon[]
+    */
    public Icon[] getHumanHandIcons() {
       int numCardsInHand = getHand(1).getNumCards();
       
@@ -87,6 +127,8 @@ public class GameModel
       
       return humanHandIcons;
    }
+   
+   //Getters for GUICard methods
    public Icon getCardIcon(Card card) { return GUICard.getIcon(card); }
    public Icon getCardBackIcon() { return GUICard.getBackCardIcon(); }
 }

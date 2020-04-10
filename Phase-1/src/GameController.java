@@ -4,7 +4,12 @@ import java.awt.event.ActionListener;
 import javax.swing.Icon;
 import javax.swing.Timer;
 
-//Phase 1 Controller Class for Low Card Game
+/**
+ * Game class for MVC design.
+ * 
+ * @author kevinrobell
+ *
+ */
 public class GameController
 {
    private static final int HUMAN = 1;
@@ -13,12 +18,21 @@ public class GameController
    GameModel model;
    GameView view;
    
+   /**
+    * Constructor
+    * 
+    * @param model
+    * @param view
+    */
    GameController(GameModel model, GameView view) {
       this.model = model;
       this.view = view;
       init();
    }
    
+   /**
+    * Sets up view and model classes and sets actionListener to JButtons.
+    */
    private void init() {
       if(model.dealNewHands()) {
          model.sortHands();
@@ -125,6 +139,9 @@ public class GameController
       }
    }
    
+   /**
+    * Computer decides which card to play based upon card played by human.
+    */
    public void computerPlaysSecond(){
       
       String status = "Player Wins";
@@ -141,20 +158,25 @@ public class GameController
                break;
          }
       }
+      // Computer doesn't have a lower card.
       if (cardIndex<0){
          cardIndex = 0;
       }
+      // Check for a tie.
       if (model.compareCards(model.getPlayedCard(HUMAN).getValue(), 
             model.getHand(COMPUTER).inspectCard(cardIndex).getValue()) == 0) {
          status = "It's a tie!";
          model.setUserMove(HUMAN);
       }
+      // Human wins this round.
       else if(model.getUserMove() != COMPUTER){
          model.incrementHumanScore();
          view.setHumanScore(model.getHumanScore());
       }  
+      //Display winner message.
       view.setMessageLabel(status);
       
+      //Play and display computer's card.
       model.playCard(COMPUTER, cardIndex);
       Icon cardIcon = model.getCardIcon(model.getPlayedCard(COMPUTER));
       view.playComputerCard(cardIcon);

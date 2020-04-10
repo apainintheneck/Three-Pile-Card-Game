@@ -1,4 +1,9 @@
-//Phase 1 main for new MVC version of the Low Card Game.
+/**
+ * Main for new MVC design of Low Card Game.
+ * 
+ * @author kevinrobell
+ *
+ */
 public class Assig6
 {
 

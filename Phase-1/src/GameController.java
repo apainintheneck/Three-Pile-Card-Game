@@ -34,38 +34,40 @@ public class GameController
    {
       String action = ae.getActionCommand();
       int k = Integer.parseInt(action);
+      model.playCard(HUMAN, k);
       
-      LowCardGame.getHand(1).inspectCard(k);
       String status;
-       human.setIcon(GUICard.getIcon(LowCardGame.getHand(1).inspectCard(k)));
-       // if user goes first
-       if (userMove ==1){
-          int cpu = duel(LowCardGame.getHand(1).inspectCard(k), LowCardGame.getHand(0));
-          computer.setIcon(GUICard.getIcon(LowCardGame.playCard(0,cpu)));
-       }
-       //otherwise cpu goes first
-       else {
-          int result = checkCards(LowCardGame.getHand(1).inspectCard(k).getValue(), LowCardGame.playCard(0,0).getValue());
-          if (result == 0){
-             status = "It's a tie!";
-             userMove =1;
-          }
-          else if (result == 1){
-             status = "Player Wins";
-             userMove = 1;
-             humanScore++;
-             human.setText("Human: " + Integer.toString(humanScore));
-          }
-          else {
-             status = "CPU Wins";
-             userMove = 0;
-             cpuScore++;
-            computer.setText("Computer: " + Integer.toString(cpuScore));
-          }
-          score.setText(status);
+      view.playHumanCard(model.getCardIcon(model.getHand(HUMAN).inspectCard(k)));
+      // if user goes first
+      if (model.getUserMove() == HUMAN){
+         computerPlaysSecond();
+      }
+      //otherwise computer already went first
+      else {
+         //Play
+         int result = model.compareCards(model.getPlayedCard(HUMAN).getValue(), 
+               model.getPlayedCard(COMPUTER).getValue());
+         if (result == 0){
+            status = "It's a tie!";
+            model.setUserMove(HUMAN);
+         }
+         else if (result == 1){
+            status = "Player Wins";
+            model.setUserMove(HUMAN);
+            model.incrementHumanScore();
+            view.setHumanScore(model.getHumanScore());
+         }
+         else {
+            status = "Computer Wins";
+            model.setUserMove(COMPUTER);
+            model.incrementComputerScore();
+            view.setHumanScore(model.getHumanScore());
+         }
+         //score.setText(status);
+         view.setMessageLabel(status);
        }
        // plays the card that was clicked on
-       LowCardGame.playCard(1,k);
+       model.playCard(HUMAN,k);
        // render the cpu and user hands
        myCardTable.pn1ComputerHand.removeAll();
        myCardTable.pn1ComputerHand.revalidate();

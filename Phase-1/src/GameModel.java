@@ -13,6 +13,8 @@ public class GameModel
    //Need cardIcons to load card icons even though compiler says it's unused.
    private GUICard cardIcons = new GUICard();
    
+   private Icon blankIcon = new ImageIcon();
+   
    private int userMove = 1;
    private int computerScore = 0;
    private int humanScore = 0;
@@ -131,4 +133,5 @@ public class GameModel
    //Getters for GUICard methods
    public Icon getCardIcon(Card card) { return GUICard.getIcon(card); }
    public Icon getCardBackIcon() { return GUICard.getBackCardIcon(); }
+   public Icon getBlankIcon() { return blankIcon; }
 }

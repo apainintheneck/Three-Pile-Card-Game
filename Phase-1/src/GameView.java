@@ -1,4 +1,5 @@
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -59,12 +60,10 @@ public class GameView
    /**
     * Creates labels and buttons for CardTable and places them in the frame.
     * 
-    * Receives cardBackIcon to set up Play Area. 
     * Call setComputerHand and setHumanHand to place image icons on those 
     * labels and buttons.
-    * @param cardBackIcon
     */
-   public void init(Icon cardBackIcon)
+   public void init()
    {
       //Create labels and buttons for both hands
       for(int i = 0; i < numCardsPerHand; i++) {
@@ -75,13 +74,13 @@ public class GameView
       }
       
       playedCardLabels[COMPUTER] = new JLabel("Computer: 0 ");
-      playedCardLabels[COMPUTER].setIcon(cardBackIcon);
+      playedCardLabels[COMPUTER].setIcon(new ImageIcon());
       playedCardLabels[COMPUTER].setHorizontalAlignment(JLabel.CENTER);
       playedCardLabels[COMPUTER].setVerticalTextPosition(SwingConstants.BOTTOM);
       playedCardLabels[COMPUTER].setHorizontalTextPosition(SwingConstants.CENTER);
       //Set played card invisible
       playedCardLabels[HUMAN] = new JLabel("Human: 0 ");
-      playedCardLabels[HUMAN].setIcon(cardBackIcon);
+      playedCardLabels[HUMAN].setIcon(new ImageIcon());
       playedCardLabels[HUMAN].setHorizontalAlignment(JLabel.CENTER);
       playedCardLabels[HUMAN].setVerticalTextPosition(SwingConstants.BOTTOM);
       playedCardLabels[HUMAN].setHorizontalTextPosition(SwingConstants.CENTER);

@@ -37,7 +37,7 @@ public class GameController
       if(model.dealNewHands()) {
          model.sortHands();
          
-         view.init(model.getCardBackIcon());
+         view.init();
          view.setComputerHand(model.getNumCardsPerHand(), model.getCardBackIcon());
          view.setHumanHand(model.getHumanHandIcons());
          for(int i = 0; i < model.getNumCardsPerHand(); i++) {
@@ -80,8 +80,6 @@ public class GameController
                      //score.setText(status);
                      view.setMessageLabel(status);
                    }
-                   // plays the card that was clicked on
-                   //model.playCard(HUMAN,k);
                    // render the cpu and user hands
                    view.clearComputerHand();
                    view.clearHumanHand();
@@ -112,7 +110,7 @@ public class GameController
                    if (model.getUserMove() == COMPUTER){
                       Timer timer4 = new Timer(2000, e -> {
                          //Reset humans played card
-                         view.playHumanCard(model.getCardBackIcon());
+                         view.playHumanCard(model.getBlankIcon());
                          
                          //Play card from the computer
                          model.playCard(COMPUTER, 0);
@@ -120,15 +118,20 @@ public class GameController
                          //Set card computer just played
                          Icon cardIcon = model.getCardIcon(model.getPlayedCard(COMPUTER));
                          view.playComputerCard(cardIcon);
+                         
+                         //Remove card visually from computer's hand.
+                         view.clearComputerHand();
+                         view.setComputerHand(model.getHand(COMPUTER).getNumCards(),
+                               GUICard.getBackCardIcon());
                       });
                       timer4.setRepeats(false);
                       timer4.start();
                    }
-                   else {
+                   else {                      
                       Timer timer4 = new Timer(2000, e -> {
                          //Reset both players played cards
-                         view.playHumanCard(model.getCardBackIcon());
-                         view.playComputerCard(model.getCardBackIcon());
+                         view.playHumanCard(model.getBlankIcon());
+                         view.playComputerCard(model.getBlankIcon());
                       });
                       timer4.setRepeats(false);
                       timer4.start();

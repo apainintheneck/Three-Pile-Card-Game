@@ -15,6 +15,9 @@ public class GameController
    private static final int HUMAN = 1;
    private static final int COMPUTER = 0;
    
+   //Tracks if button has been pressed
+   private static boolean isPressed = false;
+   
    GameModel model;
    GameView view;
    
@@ -41,9 +44,15 @@ public class GameController
          view.setComputerHand(model.getNumCardsPerHand(), model.getCardBackIcon());
          view.setHumanHand(model.getHumanHandIcons());
          for(int i = 0; i < model.getNumCardsPerHand(); i++) {
-            view.getHumanHand()[i].addActionListener(new ActionListener() {
+            view.getHumanHand()[i].addActionListener(new ActionListener() {               
                @Override
                public void actionPerformed(ActionEvent ae) {
+                  //Check if button is already pressed
+                  if(isPressed == true)
+                     return;
+                  else
+                     isPressed = true;
+                  
                   String action = ae.getActionCommand();
                   int k = Integer.parseInt(action);
                   // plays the card that was clicked on
@@ -97,6 +106,7 @@ public class GameController
                          else {
                             view.setMessageLabel("<html>Game Over <br> You Tied!</html>");
                          }
+                         isPressed = false;
                       });
                       timer4.setRepeats(false);
                       timer4.start();
@@ -123,6 +133,7 @@ public class GameController
                          view.clearComputerHand();
                          view.setComputerHand(model.getHand(COMPUTER).getNumCards(),
                                GUICard.getBackCardIcon());
+                         isPressed = false;
                       });
                       timer4.setRepeats(false);
                       timer4.start();
@@ -132,6 +143,7 @@ public class GameController
                          //Reset both players played cards
                          view.playHumanCard(model.getBlankIcon());
                          view.playComputerCard(model.getBlankIcon());
+                         isPressed = false;
                       });
                       timer4.setRepeats(false);
                       timer4.start();

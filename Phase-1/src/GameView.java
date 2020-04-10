@@ -64,6 +64,8 @@ public class GameView
       messageLabel.setText("Play Low Card!");
    }
    
+   public CardTable getFrame() { return myCardTable; }
+   
    public void resetComputerHand() {
       myCardTable.pn1ComputerHand.removeAll();
       myCardTable.pn1ComputerHand.revalidate();

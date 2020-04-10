@@ -40,7 +40,7 @@ public class GameModel
    public boolean takeCard(int playerIndex) { return LowCardGame.takeCard(playerIndex); }
    
    //Compare two cards
-   public static int compareCards(char human, char computer){
+   public int compareCards(char human, char computer){
       int i = 0;
       int j = 0;
       for (; i<Card.valuRanks.length; i++){

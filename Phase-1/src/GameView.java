@@ -9,6 +9,9 @@ public class GameView
 {
    private final static int NUM_PLAYERS = 2;
    private final static int DEFAULT_CARDS_PER_HAND = 7;
+   //Constants to make array values more readable
+   private static final int HUMAN = 1;
+   private static final int COMPUTER = 0;
    
    private int numCardsPerHand;
    
@@ -47,17 +50,17 @@ public class GameView
       setComputerHand(numCardsPerHand, cardBackIcon);
       setHumanHand(humanHandIcons);
       
-      playedCardLabels[0] = new JLabel("Computer: 0 ");
-      playedCardLabels[0].setIcon(cardBackIcon);
-      playedCardLabels[0].setHorizontalAlignment(JLabel.CENTER);
-      playedCardLabels[0].setVerticalTextPosition(SwingConstants.BOTTOM);
-      playedCardLabels[0].setHorizontalTextPosition(SwingConstants.CENTER);
+      playedCardLabels[COMPUTER] = new JLabel("Computer: 0 ");
+      playedCardLabels[COMPUTER].setIcon(cardBackIcon);
+      playedCardLabels[COMPUTER].setHorizontalAlignment(JLabel.CENTER);
+      playedCardLabels[COMPUTER].setVerticalTextPosition(SwingConstants.BOTTOM);
+      playedCardLabels[COMPUTER].setHorizontalTextPosition(SwingConstants.CENTER);
       //Set played card invisible
-      playedCardLabels[1] = new JLabel("Human: 0 ");
-      playedCardLabels[1].setIcon(cardBackIcon);
-      playedCardLabels[1].setHorizontalAlignment(JLabel.CENTER);
-      playedCardLabels[1].setVerticalTextPosition(SwingConstants.BOTTOM);
-      playedCardLabels[1].setHorizontalTextPosition(SwingConstants.CENTER);
+      playedCardLabels[HUMAN] = new JLabel("Human: 0 ");
+      playedCardLabels[HUMAN].setIcon(cardBackIcon);
+      playedCardLabels[HUMAN].setHorizontalAlignment(JLabel.CENTER);
+      playedCardLabels[HUMAN].setVerticalTextPosition(SwingConstants.BOTTOM);
+      playedCardLabels[HUMAN].setHorizontalTextPosition(SwingConstants.CENTER);
       //Set played card invisible
       messageLabel = new JLabel();
       messageLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -97,11 +100,11 @@ public class GameView
    public JButton[] getHumanHand() { return humanHandButtons; }
    
    public void setComputerScore(int score) {
-      playedCardLabels[0].setText("Computer: " + score);
+      playedCardLabels[COMPUTER].setText("Computer: " + score);
    }
    
    public void setHumanScore(int score) {
-      playedCardLabels[1].setText("Human: " + score);
+      playedCardLabels[HUMAN].setText("Human: " + score);
    }
    
    public void setMessageLabel(String text) {
@@ -109,16 +112,16 @@ public class GameView
    }
    
    public void playComputerCard(Icon cardIcon) {
-      playedCardLabels[0].setIcon(cardIcon);
+      playedCardLabels[COMPUTER].setIcon(cardIcon);
    }
    
    public void playHumanCard(Icon cardIcon) {
-      playedCardLabels[1].setIcon(cardIcon);
+      playedCardLabels[HUMAN].setIcon(cardIcon);
    }
    
    void resetPlayArea(Icon cardBackIcon) {
-      playedCardLabels[0].setIcon(cardBackIcon);
-      playedCardLabels[1].setIcon(cardBackIcon);
+      playedCardLabels[COMPUTER].setIcon(cardBackIcon);
+      playedCardLabels[HUMAN].setIcon(cardBackIcon);
    }
    
 }

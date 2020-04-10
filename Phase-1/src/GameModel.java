@@ -3,21 +3,24 @@ import javax.swing.ImageIcon;
 
 //Phase 1 Model Class for Low Card Game
 public class GameModel
-{
+{  
    private CardGameFramework LowCardGame;
    private GUICard cardIcons = new GUICard();
    
-   private static int userMove = 1;
-   private static int computerScore = 0;
+   private int userMove = 1;
+   private int computerScore = 0;
    private int humanScore = 0;
    
    private int numPlayers;
    private int numCardsPerHand;
    
+   private Card playedCards[];
+   
    GameModel(int numPacksPerDeck, int numJokersPerPack, int numUnusedCardsPerPack, 
          Card[] unusedCardsPerPack, int numPlayers, int numCardsPerHand) {
       this.numPlayers = numPlayers;
       this.numCardsPerHand = numCardsPerHand;
+      playedCards = new Card[numPlayers];
       LowCardGame = new CardGameFramework(numPacksPerDeck, numJokersPerPack, 
             numUnusedCardsPerPack, unusedCardsPerPack, numPlayers, numCardsPerHand);
    }
@@ -30,13 +33,43 @@ public class GameModel
    public int getNumCardsPerHand() { return numCardsPerHand; }
    public int getNumPlayers() { return numPlayers; }
    public Card playCard(int playerIndex, int cardIndex) {
-      return LowCardGame.playCard(playerIndex, cardIndex);
+      playedCards[playerIndex] = LowCardGame.playCard(playerIndex, cardIndex);
+      return playedCards[playerIndex];
    }
+   public Card getPlayedCard(int cardIndex) { return playedCards[cardIndex]; }
    public boolean takeCard(int playerIndex) { return LowCardGame.takeCard(playerIndex); }
    
-   //Getter and update userMove
+   //Compare two cards
+   public static int compareCards(char human, char computer){
+      int i = 0;
+      int j = 0;
+      for (; i<Card.valuRanks.length; i++){
+         if (human == Card.valuRanks[i]){
+            break;
+         }
+      }
+      for (; j<Card.valuRanks.length; j++){
+         if (computer == Card.valuRanks[j]){
+            break;
+         }
+      }
+      // if the two cards are equal
+      if (i == j){
+         return 0;
+      }
+      // if the human lost to the computer
+      else if (j<i){
+         return -1;
+      }
+      //otherwise human won
+      else{
+         return 1;
+      }
+   }
+   
+   //Getter and setter for userMove
    public int getUserMove() { return userMove; }
-   public void nextPlayerMove() { userMove = (userMove + 1) % numPlayers; }
+   public void setUserMove(int userMove) { this.userMove = userMove; }
    
    //Getters and setters for scores
    public int getHumanScore() { return humanScore; }

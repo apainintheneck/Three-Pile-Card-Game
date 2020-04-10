@@ -69,25 +69,21 @@ public class GameController
        // plays the card that was clicked on
        model.playCard(HUMAN,k);
        // render the cpu and user hands
-       myCardTable.pn1ComputerHand.removeAll();
-       myCardTable.pn1ComputerHand.revalidate();
-       myCardTable.pn1ComputerHand.repaint();
-       myCardTable.pn1HumanHand.removeAll();
-       myCardTable.pn1HumanHand.revalidate();
-       myCardTable.pn1HumanHand.repaint();
+       view.resetComputerHand();
+       view.resetHumanHand();
        //if there's no cards left in your hand the game is over
-       if (LowCardGame.getHand(1).getNumCards() ==0){
+       if (model.getHand(HUMAN).getNumCards() == 0) {
           Timer timer4 = new Timer(2000, e -> {
-             human.setIcon(GUICard.getBackCardIcon());
-             computer.setIcon(GUICard.getBackCardIcon());
-             if (cpuScore<humanScore){
-                score.setText ("<html>Game Over <br> You Won!</html>");
+             view.playHumanCard(model.getCardBackIcon());
+             view.playComputerCard(model.getCardBackIcon());
+             if (model.getComputerScore() < model.getHumanScore()) {
+                view.setMessageLabel("<html>Game Over <br> You Won!</html>");
              }
-             else if (cpuScore>humanScore){
-                score.setText ("<html>Game Over <br> You Lost!</html>");
+             else if (model.getComputerScore() > model.getHumanScore()) {
+                view.setMessageLabel("<html>Game Over <br> You Lost!</html>");
              }
              else {
-                score.setText ("<html>Game Over <br> You Tied!</html>");
+                view.setMessageLabel("<html>Game Over <br> You Tied!</html>");
              }
           });
           timer4.setRepeats(false);
@@ -95,24 +91,29 @@ public class GameController
           return;
        }
        // adding the cards to cpu and human hand (visually)
-       for(int j = 0; j < LowCardGame.getHand(1).getNumCards(); j++){
-          humanLabels[j].setIcon(GUICard.getIcon(LowCardGame.getHand(1).inspectCard(j)));
-          myCardTable.pn1ComputerHand.add(computerLabels[j]);
-          myCardTable.pn1HumanHand.add(humanLabels[j]);
-       }
+       view.setComputerHand(model.getHand(COMPUTER).getNumCards(), GUICard.getBackCardIcon());
+       view.setHumanHand(model.getHumanHandIcons());
        // if cpu has first move after winning -- wait 2 seconds before showing it's card
-       if (userMove ==0){
+       if (model.getUserMove() == COMPUTER){
           Timer timer4 = new Timer(2000, e -> {
-             human.setIcon(GUICard.getBackCardIcon());
-             computer.setIcon(GUICard.getIcon(LowCardGame.getHand(0).inspectCard(0)));
+             //Reset humans played card
+             view.playHumanCard(model.getCardBackIcon());
+             
+             //Play card from the computer
+             model.playCard(COMPUTER, 0);
+             
+             //Set card computer just played
+             Icon cardIcon = model.getCardIcon(model.getPlayedCard(COMPUTER));
+             view.playComputerCard(cardIcon);
           });
           timer4.setRepeats(false);
           timer4.start();
        }
        else {
           Timer timer4 = new Timer(2000, e -> {
-             human.setIcon(GUICard.getBackCardIcon());
-             computer.setIcon(GUICard.getBackCardIcon());
+             //Reset both players played cards
+             view.playHumanCard(model.getCardBackIcon());
+             view.playComputerCard(model.getCardBackIcon());
           });
           timer4.setRepeats(false);
           timer4.start();

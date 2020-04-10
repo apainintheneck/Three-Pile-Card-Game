@@ -97,6 +97,7 @@ public class GameView
       for(int i = 0; i < humanHandIcons.length; i++)
       {
          humanHandButtons[i] = new JButton(humanHandIcons[i]);
+         humanHandButtons[i].setActionCommand(Integer.toString(i));
          myCardTable.pn1HumanHand.add(humanHandButtons[i]);
       }
    }

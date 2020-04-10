@@ -75,13 +75,13 @@ public class GameView
    
    public CardTable getFrame() { return myCardTable; }
    
-   public void resetComputerHand() {
+   public void clearComputerHand() {
       myCardTable.pn1ComputerHand.removeAll();
       myCardTable.pn1ComputerHand.revalidate();
       myCardTable.pn1ComputerHand.repaint();
    }
       
-   public void resetHumanHand() {
+   public void clearHumanHand() {
       myCardTable.pn1HumanHand.removeAll();
       myCardTable.pn1HumanHand.revalidate();
       myCardTable.pn1HumanHand.repaint();

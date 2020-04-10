@@ -61,7 +61,7 @@ public class GameController
                         status = "Computer Wins";
                         model.setUserMove(COMPUTER);
                         model.incrementComputerScore();
-                        view.setHumanScore(model.getHumanScore());
+                        view.setComputerScore(model.getComputerScore());
                      }
                      //score.setText(status);
                      view.setMessageLabel(status);
@@ -69,8 +69,8 @@ public class GameController
                    // plays the card that was clicked on
                    //model.playCard(HUMAN,k);
                    // render the cpu and user hands
-                   view.resetComputerHand();
-                   view.resetHumanHand();
+                   view.clearComputerHand();
+                   view.clearHumanHand();
                    //if there's no cards left in your hand the game is over
                    if (model.getHand(HUMAN).getNumCards() == 0) {
                       Timer timer4 = new Timer(2000, e -> {

@@ -65,6 +65,10 @@ public class GameView
       messageLabel = new JLabel();
       messageLabel.setHorizontalAlignment(JLabel.CENTER);
       messageLabel.setText("Play Low Card!");
+      //Add jlabels to play area
+      myCardTable.pn1PlayArea.add(playedCardLabels[COMPUTER]);
+      myCardTable.pn1PlayArea.add(messageLabel);
+      myCardTable.pn1PlayArea.add(playedCardLabels[HUMAN]);
    }
    
    public CardTable getFrame() { return myCardTable; }
@@ -100,11 +104,11 @@ public class GameView
    public JButton[] getHumanHand() { return humanHandButtons; }
    
    public void setComputerScore(int score) {
-      playedCardLabels[COMPUTER].setText("Computer: " + score);
+      playedCardLabels[COMPUTER].setText("Computer: " + Integer.toString(score));
    }
    
    public void setHumanScore(int score) {
-      playedCardLabels[HUMAN].setText("Human: " + score);
+      playedCardLabels[HUMAN].setText("Human: " + Integer.toString(score));
    }
    
    public void setMessageLabel(String text) {

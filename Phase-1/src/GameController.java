@@ -22,8 +22,7 @@ public class GameController
       if(model.dealNewHands()) {
          model.sortHands();
          
-         view.setComputerHand(model.getNumCardsPerHand(), GUICard.getBackCardIcon());
-         view.setHumanHand(model.getHumanHandIcons());
+         view.init(model.getCardBackIcon(), model.getHumanHandIcons());
          for(int i = 0; i < model.getNumCardsPerHand(); i++) {
             view.getHumanHand()[i].addActionListener(ae -> chooseCard(ae));
          }

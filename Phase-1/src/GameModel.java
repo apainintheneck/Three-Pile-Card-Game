@@ -32,9 +32,8 @@ public class GameModel
    public int getNumCardInDeck() { return LowCardGame.getNumCardsRemainingInDeck(); }
    public int getNumCardsPerHand() { return numCardsPerHand; }
    public int getNumPlayers() { return numPlayers; }
-   public Card playCard(int playerIndex, int cardIndex) {
+   public void playCard(int playerIndex, int cardIndex) {
       playedCards[playerIndex] = LowCardGame.playCard(playerIndex, cardIndex);
-      return playedCards[playerIndex];
    }
    public Card getPlayedCard(int cardIndex) { return playedCards[cardIndex]; }
    public boolean takeCard(int playerIndex) { return LowCardGame.takeCard(playerIndex); }

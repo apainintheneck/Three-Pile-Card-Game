@@ -43,12 +43,14 @@ public class GameView
       this(DEFAULT_CARDS_PER_HAND);
    }
    
-   //Set buttons and labels
-   public void init(Icon cardBackIcon, Icon[] humanHandIcons)
+   //Initialize buttons and labels
+   public void init(Icon cardBackIcon)
    {
-      //Set labels and buttons for both hands
-      setComputerHand(numCardsPerHand, cardBackIcon);
-      setHumanHand(humanHandIcons);
+      //Create labels and buttons for both hands
+      for(int i = 0; i < numCardsPerHand; i++) {
+         computerHandLabels[i] = new JLabel();
+         humanHandButtons[i] = new JButton();
+      }
       
       playedCardLabels[COMPUTER] = new JLabel("Computer: 0 ");
       playedCardLabels[COMPUTER].setIcon(cardBackIcon);
@@ -88,7 +90,7 @@ public class GameView
    public void setComputerHand(int numCards, Icon cardBackIcon) {
       for(int i = 0; i < numCards; i++)
       {
-         computerHandLabels[i] = new JLabel(cardBackIcon);
+         computerHandLabels[i].setIcon(cardBackIcon);
          myCardTable.pn1ComputerHand.add(computerHandLabels[i]);
       }
    }
@@ -96,7 +98,7 @@ public class GameView
    public void setHumanHand(Icon[] humanHandIcons) {
       for(int i = 0; i < humanHandIcons.length; i++)
       {
-         humanHandButtons[i] = new JButton(humanHandIcons[i]);
+         humanHandButtons[i].setIcon(humanHandIcons[i]);
          humanHandButtons[i].setActionCommand(Integer.toString(i));
          myCardTable.pn1HumanHand.add(humanHandButtons[i]);
       }

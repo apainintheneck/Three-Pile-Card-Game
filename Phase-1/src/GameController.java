@@ -23,17 +23,21 @@ public class GameController
       if(model.dealNewHands()) {
          model.sortHands();
          
-         view.init(model.getCardBackIcon(), model.getHumanHandIcons());
+         view.init(model.getCardBackIcon());
+         view.setComputerHand(model.getNumCardsPerHand(), model.getCardBackIcon());
+         view.setHumanHand(model.getHumanHandIcons());
          for(int i = 0; i < model.getNumCardsPerHand(); i++) {
             view.getHumanHand()[i].addActionListener(new ActionListener() {
                @Override
                public void actionPerformed(ActionEvent ae) {
                   String action = ae.getActionCommand();
-                  int k = Integer.parseInt(action); //Error start here
-                  model.playCard(HUMAN, k);
+                  int k = Integer.parseInt(action);
+                  // plays the card that was clicked on
+                  model.playCard(HUMAN,k);
                   
                   String status;
-                  view.playHumanCard(model.getCardIcon(model.getHand(HUMAN).inspectCard(k)));
+                  //view.playHumanCard(model.getCardIcon(model.getHand(HUMAN).inspectCard(k)));
+                  view.playHumanCard(model.getCardIcon(model.getPlayedCard(HUMAN)));
                   // if user goes first
                   if (model.getUserMove() == HUMAN){
                      computerPlaysSecond();
@@ -63,7 +67,7 @@ public class GameController
                      view.setMessageLabel(status);
                    }
                    // plays the card that was clicked on
-                   model.playCard(HUMAN,k);
+                   //model.playCard(HUMAN,k);
                    // render the cpu and user hands
                    view.resetComputerHand();
                    view.resetHumanHand();
@@ -87,7 +91,8 @@ public class GameController
                       return;
                    }
                    // adding the cards to cpu and human hand (visually)
-                   view.setComputerHand(model.getHand(COMPUTER).getNumCards(), GUICard.getBackCardIcon());
+                   view.setComputerHand(model.getHand(COMPUTER).getNumCards(), 
+                         GUICard.getBackCardIcon());
                    view.setHumanHand(model.getHumanHandIcons());
                    // if cpu has first move after winning -- wait 2 seconds before showing it's card
                    if (model.getUserMove() == COMPUTER){
@@ -123,14 +128,14 @@ public class GameController
    public void computerPlaysSecond(){
       
       String status = "Player Wins";
-      model.setUserMove(1);
-      int cardIndex = model.getHand(0).getNumCards()-1;
+      model.setUserMove(HUMAN);
+      int cardIndex = model.getHand(COMPUTER).getNumCards()-1;
       for (; cardIndex>=0; cardIndex--){
          // check if cpu's card's value is less than player's card's value
          if (model.compareCards(model.getPlayedCard(HUMAN).getValue(), 
                model.getHand(COMPUTER).inspectCard(cardIndex).getValue()) == -1) {
                status = "CPU Wins";
-               model.setUserMove(0);
+               model.setUserMove(COMPUTER);
                model.incrementComputerScore();
                view.setComputerScore(model.getComputerScore());
                break;
@@ -142,15 +147,16 @@ public class GameController
       if (model.compareCards(model.getPlayedCard(HUMAN).getValue(), 
             model.getHand(COMPUTER).inspectCard(cardIndex).getValue()) == 0) {
          status = "It's a tie!";
-         model.setUserMove(1);
+         model.setUserMove(HUMAN);
       }
-      else if(model.getUserMove() != 0){
+      else if(model.getUserMove() != COMPUTER){
          model.incrementHumanScore();
          view.setHumanScore(model.getHumanScore());
       }  
       view.setMessageLabel(status);
-   
-      Icon cardIcon = GUICard.getIcon(model.playCard(COMPUTER, cardIndex));
+      
+      model.playCard(COMPUTER, cardIndex);
+      Icon cardIcon = model.getCardIcon(model.getPlayedCard(COMPUTER));
       view.playComputerCard(cardIcon);
    }
 

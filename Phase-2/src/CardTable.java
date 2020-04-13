@@ -81,8 +81,10 @@ public class CardTable extends JFrame
       timerToggleButton.setText("Start/Stop");
       timerToggleButton.setFont(new Font("Serif", Font.BOLD, 16));
       
+      //Add time and timer start/stop button to timer area JPanel
       pn1TimerArea.add(timerToggleButton, BorderLayout.PAGE_END);
       pn1TimerArea.add(autoTimer, BorderLayout.CENTER);
+      //Add timer panel to PlayArea
       pn1PlayArea.add(pn1TimerArea);
    }
    

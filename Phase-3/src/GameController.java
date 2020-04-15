@@ -1,5 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 
 import javax.swing.Icon;
 import javax.swing.Timer;
@@ -195,13 +196,20 @@ public class GameController
       int winner = model.determineWinner();
       if(winner == 1) {
          view.setMessageLabel("You won!");
+         JOptionPane.showMessageDialog(null, "There's no more cards in the deck. You Won!");
+
       } else if (winner == -1) {
          view.setMessageLabel("You lost!");
+         JOptionPane.showMessageDialog(null, "There's no more cards in the deck. You Lost");
+
       } else {
          view.setMessageLabel("You tied!");
+         JOptionPane.showMessageDialog(null, "There's no more cards in the deck. You tied!");
+
       }
       gameEnd= true;
       model.setUserMove(-1);
+      
    }
 
 }

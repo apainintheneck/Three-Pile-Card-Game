@@ -22,8 +22,8 @@ public class GameView
    private final static int NUM_PILES = 3;
    private final static int DEFAULT_CARDS_PER_HAND = 7;
    //Constants to make array values more readable
-   private static final int PILE_2 = 1;
    private static final int PILE_1 = 0;
+   private static final int PILE_2 = 1;
    private static final int PILE_3 = 2;
 
    private int numCardsPerHand;
@@ -32,7 +32,7 @@ public class GameView
    private JLabel[] computerHandLabels;
    private JButton[] humanHandButtons; 
    private JButton[] piles  = new JButton[NUM_PILES]; 
-   private JButton messageLabel = new JButton();
+   //private JButton messageLabel = new JButton();
    private JButton cannotPlay;
    private JPanel infoArea, timerArea;
    
@@ -221,7 +221,7 @@ public class GameView
     * @param score
     */
    public void setHumanScore(int score) {
-      piles[PILE_2].setText("Human: " + Integer.toString(score));
+      piles[PILE_3].setText("Human: " + Integer.toString(score));
    }
    
    /**
@@ -229,7 +229,7 @@ public class GameView
     * @param text
     */
    public void setMessageLabel(String text) {
-      messageLabel.setText(text);
+      piles[PILE_2].setText(text);
    }
    
    /**

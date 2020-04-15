@@ -102,6 +102,8 @@ public class GameView
       myCardTable.pn1PlayArea.add(playedCardLabels[COMPUTER]);
       myCardTable.pn1PlayArea.add(messageLabel);
       myCardTable.pn1PlayArea.add(playedCardLabels[HUMAN]);
+
+      // Add the cannot play JButton
       cannotPlay = new JButton();
       cannotPlay.setText("I cannot play");
       myCardTable.pn1PlayArea.add(cannotPlay);
@@ -195,6 +197,10 @@ public class GameView
       messageLabel.setText(text);
    }
    
+   /**
+    * Getter for the cannot play button
+    * @return JButton for the cannot play button
+    */
    public JButton getCannotPlay() {
       return cannotPlay;
    }
@@ -227,7 +233,11 @@ public class GameView
       playedCardLabels[HUMAN].setIcon(cardBackIcon);
    }
 
-   public  void initPile(Card [] init) {
+   /**
+    * Update the icons for the piles
+    * @param init
+    */
+   public void initPile(Card [] init) {
       playedCardLabels[COMPUTER].setIcon(GUICard.getIcon(init[0]));
       messageLabel.setIcon(GUICard.getIcon(init[1]));
       playedCardLabels[HUMAN].setIcon(GUICard.getIcon(init[2]));

@@ -19,6 +19,7 @@ public class GameController
    private static boolean isPressed = false;
    private static int currentPile = -1;
    private static int selectedCard = -1;
+   private static boolean gameEnd = false;
    GameModel model;
    GameView view;
    
@@ -57,7 +58,7 @@ public class GameController
                      isPressed = true;
                   
                   // Only allow click events if the current user move is human
-                  if(model.getUserMove() != HUMAN) {
+                  if(model.getUserMove() != HUMAN || gameEnd) {
                      return;
                   }
                   String action = ae.getActionCommand();
@@ -65,7 +66,11 @@ public class GameController
                   // If the pile is already selected, play the card that is selected if valid
                   if(currentPile >= 0) {
                      if(model.playCardToPile(HUMAN, k, currentPile)) {
-                        model.takeCard(HUMAN);
+                        if (!model.takeCard(HUMAN))
+                           {
+                              triggerEndGame();
+                              model.setUserMove(-1);
+                           }
                         view.initPile(model.getPiles());
                         model.setUserMove(COMPUTER);
                         view.clearHumanHand();
@@ -91,7 +96,7 @@ public class GameController
                @Override
                public void actionPerformed(ActionEvent ae) {
                   // Only trigger actions if the current user move is human
-                  if(model.getUserMove() != HUMAN) {
+                  if(model.getUserMove() != HUMAN || gameEnd) {
                      return;
                   }
                   String action = ae.getActionCommand();
@@ -108,8 +113,11 @@ public class GameController
                      // Update the icons on the pile(s)
                      view.initPile(model.getPiles());
                      // Draw a new card from the deck
-                     model.takeCard(HUMAN);
-                     // Re-render the user hand
+                     if (!model.takeCard(HUMAN))
+                     {
+                        triggerEndGame();
+                        model.setUserMove(-1);
+                     }                     // Re-render the user hand
                      view.clearHumanHand();
                      view.setHumanHand(model.getHumanHandIcons());
                      // Prepare and trigger the computer move
@@ -124,7 +132,7 @@ public class GameController
             @Override
             public void actionPerformed(ActionEvent ae) {
                // Only trigger if the current user move is set to human
-              if(model.getUserMove() == HUMAN) {
+              if(model.getUserMove() == HUMAN  && !gameEnd) {
                  // Increment and update user score and trigger comptuer move
                  model.setUserMove(COMPUTER);
                  model.setUserScore(model.getUserScore() + 1);
@@ -142,12 +150,16 @@ public class GameController
     */
    private void triggerComputerMove(boolean isUserMove) {
       // If user move is computer, trigger the computer move, else, don't do anything.
-      if (model.getUserMove() == COMPUTER){
+      if (model.getUserMove() == COMPUTER && !gameEnd){
          Timer timer4 = new Timer(2000, e -> {
             // Find a card (if applicable) in the computer hand and play it in the respective pile
             if(model.findAndPlayCardToPile(COMPUTER)) {
                // Draw a new card and update the computer's hand view
-               model.takeCard(COMPUTER);
+               if (!model.takeCard(COMPUTER))
+               {
+                  triggerEndGame();
+                  model.setUserMove(-1);
+               }
                view.initPile(model.getPiles());
                view.clearComputerHand();
                view.setComputerHand(model.getHand(COMPUTER).getNumCards(),
@@ -188,6 +200,8 @@ public class GameController
       } else {
          view.setMessageLabel("You tied!");
       }
+      gameEnd= true;
+      model.setUserMove(-1);
    }
    /**
     * Computer decides which card to play based upon card played by human.

@@ -19,18 +19,19 @@ import javax.swing.border.Border;
  */
 public class GameView
 {
-   private final static int NUM_PLAYERS = 2;
+   private final static int NUM_PILES = 3;
    private final static int DEFAULT_CARDS_PER_HAND = 7;
    //Constants to make array values more readable
-   private static final int HUMAN = 1;
-   private static final int COMPUTER = 0;
-   
+   private static final int PILE_2 = 1;
+   private static final int PILE_1 = 0;
+   private static final int PILE_3 = 2;
+
    private int numCardsPerHand;
    
    private CardTable myCardTable;
    private JLabel[] computerHandLabels;
    private JButton[] humanHandButtons; 
-   private JButton[] playedCardLabels  = new JButton[NUM_PLAYERS]; 
+   private JButton[] piles  = new JButton[NUM_PILES]; 
    private JButton messageLabel = new JButton();
    private JButton cannotPlay;
    private JPanel infoArea, timerArea;
@@ -45,7 +46,7 @@ public class GameView
       else
          this.numCardsPerHand = numCardsPerHand;
       
-      myCardTable = new CardTable("Card Table", this.numCardsPerHand, NUM_PLAYERS);
+      myCardTable = new CardTable("Card Table", this.numCardsPerHand, NUM_PILES);
       
       // establish main frame in which program will run
       myCardTable.setSize(800, 600);
@@ -113,34 +114,34 @@ public class GameView
       //Add infoArea panel to playArea
       myCardTable.pn1PlayArea.add(infoArea);
       
-      playedCardLabels[COMPUTER] = new JButton("Computer: 0 ");
-      playedCardLabels[COMPUTER].setIcon(new ImageIcon());
-      playedCardLabels[COMPUTER].setHorizontalAlignment(JLabel.CENTER);
-      playedCardLabels[COMPUTER].setVerticalTextPosition(SwingConstants.BOTTOM);
-      playedCardLabels[COMPUTER].setHorizontalTextPosition(SwingConstants.CENTER);
-      playedCardLabels[COMPUTER].setActionCommand(Integer.toString(0));
+      piles[PILE_1] = new JButton("Computer: 0 ");
+      piles[PILE_1].setIcon(new ImageIcon());
+      piles[PILE_1].setHorizontalAlignment(JLabel.CENTER);
+      piles[PILE_1].setVerticalTextPosition(SwingConstants.BOTTOM);
+      piles[PILE_1].setHorizontalTextPosition(SwingConstants.CENTER);
+      piles[PILE_1].setActionCommand(Integer.toString(0));
 
       //Set played card invisible
-      playedCardLabels[HUMAN] = new JButton("Human: 0 ");
-      playedCardLabels[HUMAN].setIcon(new ImageIcon());
-      playedCardLabels[HUMAN].setHorizontalAlignment(JLabel.CENTER);
-      playedCardLabels[HUMAN].setVerticalTextPosition(SwingConstants.BOTTOM);
-      playedCardLabels[HUMAN].setHorizontalTextPosition(SwingConstants.CENTER);
-      playedCardLabels[HUMAN].setActionCommand(Integer.toString(2));
-
+      piles[PILE_2] = new JButton();
+      piles[PILE_2].setHorizontalAlignment(JLabel.CENTER);
+      piles[PILE_2].setText("");
+      piles[PILE_2].setHorizontalAlignment(JLabel.CENTER);
+      piles[PILE_2].setVerticalTextPosition(SwingConstants.BOTTOM);
+      piles[PILE_2].setHorizontalTextPosition(SwingConstants.CENTER);
+      piles[PILE_2].setActionCommand(Integer.toString(1));
+      
       //Set played card invisible
-      messageLabel = new JButton();
-      messageLabel.setHorizontalAlignment(JLabel.CENTER);
-      messageLabel.setText("");
-      messageLabel.setHorizontalAlignment(JLabel.CENTER);
-      messageLabel.setVerticalTextPosition(SwingConstants.BOTTOM);
-      messageLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-      messageLabel.setActionCommand(Integer.toString(1));
+      piles[PILE_3] = new JButton("Human: 0 ");
+      piles[PILE_3].setIcon(new ImageIcon());
+      piles[PILE_3].setHorizontalAlignment(JLabel.CENTER);
+      piles[PILE_3].setVerticalTextPosition(SwingConstants.BOTTOM);
+      piles[PILE_3].setHorizontalTextPosition(SwingConstants.CENTER);
+      piles[PILE_3].setActionCommand(Integer.toString(2));
 
       //Add jlabels to play area
-      myCardTable.pn1PlayArea.add(playedCardLabels[COMPUTER]);
-      myCardTable.pn1PlayArea.add(messageLabel);
-      myCardTable.pn1PlayArea.add(playedCardLabels[HUMAN]);
+      myCardTable.pn1PlayArea.add(piles[PILE_1]);
+      myCardTable.pn1PlayArea.add(piles[PILE_2]);
+      myCardTable.pn1PlayArea.add(piles[PILE_3]);
    }
    
    /**
@@ -203,7 +204,7 @@ public class GameView
     * 
     * @return JButton[]
     */
-    public JButton[] getPileButtons() { return new JButton[] {playedCardLabels[COMPUTER], messageLabel, playedCardLabels[HUMAN]}; }
+    public JButton[] getPileButtons() { return piles; }
    
    /**
     * Changes the text under the computer's card in the play area.
@@ -211,7 +212,7 @@ public class GameView
     * @param score
     */
    public void setComputerScore(int score) {
-      playedCardLabels[COMPUTER].setText("Computer: " + Integer.toString(score));
+      piles[PILE_1].setText("Computer: " + Integer.toString(score));
    }
    
    /**
@@ -220,7 +221,7 @@ public class GameView
     * @param score
     */
    public void setHumanScore(int score) {
-      playedCardLabels[HUMAN].setText("Human: " + Integer.toString(score));
+      piles[PILE_2].setText("Human: " + Integer.toString(score));
    }
    
    /**
@@ -245,7 +246,7 @@ public class GameView
     * @param cardIcon
     */
    public void playComputerCard(Icon cardIcon) {
-      playedCardLabels[COMPUTER].setIcon(cardIcon);
+      piles[PILE_1].setIcon(cardIcon);
    }
    
    /**
@@ -254,7 +255,7 @@ public class GameView
     * @param cardIcon
     */
    public void playHumanCard(Icon cardIcon) {
-      playedCardLabels[HUMAN].setIcon(cardIcon);
+      piles[PILE_3].setIcon(cardIcon);
    }
    
    /**
@@ -263,8 +264,8 @@ public class GameView
     * @param cardBackIcon
     */
    void resetPlayArea(Icon cardBackIcon) {
-      playedCardLabels[COMPUTER].setIcon(cardBackIcon);
-      playedCardLabels[HUMAN].setIcon(cardBackIcon);
+      piles[PILE_1].setIcon(cardBackIcon);
+      piles[PILE_3].setIcon(cardBackIcon);
    }
 
    /**
@@ -272,9 +273,9 @@ public class GameView
     * @param init
     */
    public void initPile(Card [] init) {
-      playedCardLabels[COMPUTER].setIcon(GUICard.getIcon(init[0]));
-      messageLabel.setIcon(GUICard.getIcon(init[1]));
-      playedCardLabels[HUMAN].setIcon(GUICard.getIcon(init[2]));
+      piles[PILE_1].setIcon(GUICard.getIcon(init[0]));
+      piles[PILE_2].setIcon(GUICard.getIcon(init[1]));
+      piles[PILE_3].setIcon(GUICard.getIcon(init[2]));
 
    }
    

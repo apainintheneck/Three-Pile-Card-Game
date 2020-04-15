@@ -13,8 +13,6 @@ public class GameModel
    //Need cardIcons to load card icons even though compiler says it's unused.
    private GUICard cardIcons = new GUICard();
    
-   private Icon blankIcon = new ImageIcon();
-   
    private int userMove = 1;
    
    private int numPlayers;
@@ -62,7 +60,6 @@ public class GameModel
    public void playCard(int playerIndex, int cardIndex) {
       playedCards[playerIndex] = LowCardGame.playCard(playerIndex, cardIndex);
    }
-   public Card getPlayedCard(int playerIndex) { return playedCards[playerIndex]; }
    
    /**
     * Returns true if the player was able to take a card.
@@ -71,40 +68,6 @@ public class GameModel
     * @return boolean
     */
    public boolean takeCard(int playerIndex) { return LowCardGame.takeCard(playerIndex); }
-   
-   /**
-    * Returns 1 if human wins. Returns 0 for ties. Returns -1 if computer wins.
-    * 
-    * @param human
-    * @param computer
-    * @return int
-    */
-   public int compareCards(Card human, Card computer){
-      int i = 0;
-      int j = 0;
-      for (; i<Card.valuRanks.length; i++){
-         if (human.getValue() == Card.valuRanks[i]){
-            break;
-         }
-      }
-      for (; j<Card.valuRanks.length; j++){
-         if (computer.getValue() == Card.valuRanks[j]){
-            break;
-         }
-      }
-      // if the two cards are equal
-      if (i == j){
-         return 0;
-      }
-      // if the human lost to the computer
-      else if (j<i){
-         return -1;
-      }
-      //otherwise human won
-      else{
-         return 1;
-      }
-   }
 
    /**
     * Card validator to check if the card played is valid based on the target pile card 
@@ -280,5 +243,4 @@ public class GameModel
    //Getters for GUICard methods
    public Icon getCardIcon(Card card) { return GUICard.getIcon(card); }
    public Icon getCardBackIcon() { return GUICard.getBackCardIcon(); }
-   public Icon getBlankIcon() { return blankIcon; }
 }

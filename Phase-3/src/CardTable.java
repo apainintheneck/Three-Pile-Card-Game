@@ -20,7 +20,7 @@ public class CardTable extends JFrame
    private int numPlayers;
    
    //Create three panels for the window.
-   public JPanel pn1ComputerHand, pn1HumanHand, pn1PlayArea, pn1TimerArea;
+   public JPanel pn1ComputerHand, pn1HumanHand, pn1PlayArea;
    
    CardTable(String title, int numCardsPerHand, int numPlayers)
    {
@@ -63,29 +63,10 @@ public class CardTable extends JFrame
       pn1PlayArea.setBorder(PlayAreaBorder);
       pn1PlayArea.setLayout(new GridLayout(1, numPlayers + 2));
       
-      //Setup Time area panel. This panel holds the timer for the game and have
-      //start stop buttons. 
-      pn1TimerArea = new JPanel();
-      Border pn1TimerBorder = BorderFactory.createTitledBorder("Timer");
-      pn1TimerArea.setBorder(pn1TimerBorder);
-      pn1TimerArea.setLayout(new BorderLayout());
-      
       //Add panels to JFrame.
       this.add(pn1ComputerHand);
       this.add(pn1PlayArea);
       this.add(pn1HumanHand);
-      
-      //The Start/Stop timer button together. 
-      Timer autoTimer = new Timer(true);
-      JButton timerToggleButton = autoTimer.getButtonToStartTimer();
-      timerToggleButton.setText("Start/Stop");
-      timerToggleButton.setFont(new Font("Serif", Font.BOLD, 16));
-      
-      //Add time and timer start/stop button to timer area JPanel
-      pn1TimerArea.add(timerToggleButton, BorderLayout.PAGE_END);
-      pn1TimerArea.add(autoTimer, BorderLayout.CENTER);
-      //Add timer panel to PlayArea
-      pn1PlayArea.add(pn1TimerArea);
    }
    
    CardTable()

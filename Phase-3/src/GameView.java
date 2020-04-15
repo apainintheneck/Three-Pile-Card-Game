@@ -1,9 +1,16 @@
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 
 /**
  * View class for MVC design.
@@ -27,6 +34,7 @@ public class GameView
    private JButton[] playedCardLabels  = new JButton[NUM_PLAYERS]; 
    private JButton messageLabel = new JButton();
    private JButton cannotPlay;
+   private JPanel infoArea, timerArea;
    
    /**
     * Constructor
@@ -74,6 +82,38 @@ public class GameView
          humanHandButtons[i].setActionCommand(Integer.toString(i));
       }
       
+      //Setup Time area panel. This panel holds the timer for the game and have
+      //start stop buttons. 
+      timerArea = new JPanel();
+      Border pn1TimerBorder = BorderFactory.createTitledBorder("Timer");
+      timerArea.setBorder(pn1TimerBorder);
+      timerArea.setLayout(new BorderLayout());
+      
+      //The Start/Stop timer button together. 
+      Timer autoTimer = new Timer(true);
+      JButton timerToggleButton = autoTimer.getButtonToStartTimer();
+      timerToggleButton.setText("Start/Stop");
+      timerToggleButton.setFont(new Font("Serif", Font.BOLD, 16));
+      
+      //Add time and timer start/stop button to timer area JPanel
+      timerArea.add(timerToggleButton, BorderLayout.PAGE_END);
+      timerArea.add(autoTimer, BorderLayout.CENTER);
+      
+      //Setup infoArea panel
+      infoArea = new JPanel();
+      infoArea.setLayout(new GridLayout(2,1));
+      
+      //Add timer to infoArea panel
+      infoArea.add(timerArea);
+      
+      //Create and add the cannot play JButton
+      cannotPlay = new JButton();
+      cannotPlay.setText("I cannot play");
+      infoArea.add(cannotPlay);
+      
+      //Add infoArea panel to playArea
+      myCardTable.pn1PlayArea.add(infoArea);
+      
       playedCardLabels[COMPUTER] = new JButton("Computer: 0 ");
       playedCardLabels[COMPUTER].setIcon(new ImageIcon());
       playedCardLabels[COMPUTER].setHorizontalAlignment(JLabel.CENTER);
@@ -102,11 +142,6 @@ public class GameView
       myCardTable.pn1PlayArea.add(playedCardLabels[COMPUTER]);
       myCardTable.pn1PlayArea.add(messageLabel);
       myCardTable.pn1PlayArea.add(playedCardLabels[HUMAN]);
-
-      // Add the cannot play JButton
-      cannotPlay = new JButton();
-      cannotPlay.setText("I cannot play");
-      myCardTable.pn1PlayArea.add(cannotPlay);
    }
    
    /**

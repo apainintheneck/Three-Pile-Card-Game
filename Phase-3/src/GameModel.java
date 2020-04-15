@@ -60,7 +60,6 @@ public class GameModel
    public void playCard(int playerIndex, int cardIndex) {
       playedCards[playerIndex] = LowCardGame.playCard(playerIndex, cardIndex);
    }
-   public Card getPlayedCard(int playerIndex) { return playedCards[playerIndex]; }
    
    /**
     * Returns true if the player was able to take a card.

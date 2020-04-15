@@ -16,8 +16,6 @@ public class GameModel
    private Icon blankIcon = new ImageIcon();
    
    private int userMove = 1;
-   private int computerScore = 0;
-   private int humanScore = 0;
    
    private int numPlayers;
    private int numCardsPerHand;
@@ -139,12 +137,6 @@ public class GameModel
    //Getter and setter for userMove
    public int getUserMove() { return userMove; }
    public void setUserMove(int userMove) { this.userMove = userMove; }
-   
-   //Getters and setters for scores
-   public int getHumanScore() { return humanScore; }
-   public void incrementHumanScore() { humanScore++; }
-   public int getComputerScore() { return computerScore; }
-   public void incrementComputerScore() { computerScore++; }
    
    /**
     * Create an array of card icons based upon the human's hand.

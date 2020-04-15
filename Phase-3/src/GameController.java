@@ -203,47 +203,5 @@ public class GameController
       gameEnd= true;
       model.setUserMove(-1);
    }
-   /**
-    * Computer decides which card to play based upon card played by human.
-    */
-   public void computerPlaysSecond(){
-      
-      String status = "Player Wins";
-      model.setUserMove(HUMAN);
-      int cardIndex = model.getHand(COMPUTER).getNumCards()-1;
-      for (; cardIndex>=0; cardIndex--){
-         // check if cpu's card's value is less than player's card's value
-         if (model.compareCards(model.getPlayedCard(HUMAN), 
-               model.getHand(COMPUTER).inspectCard(cardIndex)) == -1) {
-               status = "CPU Wins";
-               model.setUserMove(COMPUTER);
-               model.incrementComputerScore();
-               view.setComputerScore(model.getComputerScore());
-               break;
-         }
-      }
-      // Computer doesn't have a lower card.
-      if (cardIndex<0){
-         cardIndex = 0;
-      }
-      // Check for a tie.
-      if (model.compareCards(model.getPlayedCard(HUMAN), 
-            model.getHand(COMPUTER).inspectCard(cardIndex)) == 0) {
-         status = "It's a tie!";
-         model.setUserMove(HUMAN);
-      }
-      // Human wins this round.
-      else if(model.getUserMove() != COMPUTER){
-         model.incrementHumanScore();
-         view.setHumanScore(model.getHumanScore());
-      }  
-      //Display winner message.
-      view.setMessageLabel(status);
-      
-      //Play and display computer's card.
-      model.playCard(COMPUTER, cardIndex);
-      Icon cardIcon = model.getCardIcon(model.getPlayedCard(COMPUTER));
-      view.playComputerCard(cardIcon);
-   }
 
 }

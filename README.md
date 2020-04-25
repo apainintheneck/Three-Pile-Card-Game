@@ -1,5 +1,5 @@
 # Three-Pile-Card-Game
-This project involved building three different but related card games in Java Swing. Each phase is a self contained Java program.
+This project involved building three different but related card games in Java Swing. Each phase is a self contained Java program. We learned about GUI design, design patterns, and multi-threading while creating this program.
 
 ## Phase 1: "Low Card" Game with MVC Design Pattern
 The point of this phase was to design a game using the MVC design pattern. The rule of "low card" are simple: the person with the lowest card wins each round wins and the winner plays first next round. At the end, the player who won the most wins the game or it is a tie.
